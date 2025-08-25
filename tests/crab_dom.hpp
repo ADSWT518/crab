@@ -25,6 +25,10 @@
 #include <crab/domains/split_oct.hpp>
 #include <crab/domains/term_equiv.hpp>
 #include <crab/domains/wrapped_interval_domain.hpp>
+#include <crab/domains/tnum_domain.hpp>
+#include <crab/domains/stnum_domain.hpp>
+#include <crab/domains/swrapped_interval_domain.hpp>
+#include <crab/domains/switv_stnum_domain.hpp>
 
 namespace crab {
 
@@ -94,6 +98,14 @@ using z_pow_aa_int_t = powerset_domain<z_aa_int_t>;
 // Machine integer arithmetic domains
 using z_wrapped_interval_domain_t =
     wrapped_interval_domain<z_number, varname_t>;
+using z_tnum_domain_t =
+    tnum_domain<z_number, varname_t>;
+using z_stnum_domain_t =
+    stnum_domain<z_number, varname_t>;
+using z_swrapped_interval_domain_t =
+    swrapped_interval_domain<z_number, varname_t>;
+using z_switv_stnum_domain_t =
+    switv_stnum_domain<z_number, varname_t>;
 /*===================================================================*/
 // Region domain
 /*===================================================================*/

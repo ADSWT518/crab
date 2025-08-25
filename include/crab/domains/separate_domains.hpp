@@ -311,11 +311,16 @@ public:
   void set(const Key &k, const Value &v) {
     if (!is_bottom()) {
       if (v.is_bottom()) {
+        //crab::outs() << "set0" << "\n";
         set_to_bottom();
       } else if (v.is_top()) {
+        //crab::outs() << "set1" << "\n";
         _tree.remove(k);
+        //crab::outs() << "set2" << "\n";
       } else {
+        //crab::outs() << "set3" << "\n";
         _tree.insert(k, v);
+        //crab::outs() << "set4" << "\n";
       }
     }
   }

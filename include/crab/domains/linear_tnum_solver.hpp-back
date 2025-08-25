@@ -52,7 +52,6 @@
 #include <crab/types/linear_constraints.hpp>
 #include <crab/types/variable.hpp>
 
-
 #include <map>
 #include <set>
 #include <vector>
@@ -77,10 +76,10 @@ template <typename Interval>
 Interval lower_half_line(const Interval &i, bool is_signed);
 
 template <typename Interval>
-Interval lower_half_line(const Interval &x, const Interval &y, bool is_signed);
+Interval upper_half_line(const Interval &i, bool is_signed);
 
 template <typename Interval>
-Interval upper_half_line(const Interval &i, bool is_signed);
+Interval lower_half_line(const Interval &x, const Interval &y, bool is_signed);
 
 template <typename Interval>
 Interval upper_half_line(const Interval &x, const Interval &y, bool is_signed);
@@ -88,7 +87,7 @@ Interval upper_half_line(const Interval &x, const Interval &y, bool is_signed);
 } // namespace linear_interval_solver_impl
 
 template <typename Number, typename VariableName, typename IntervalCollection>
-class linear_interval_solver {
+class linear_tnum_solver {
 
 public:
   using Interval = typename IntervalCollection::mapped_type;
@@ -99,13 +98,11 @@ public:
       linear_constraint_system<Number, VariableName>;
   using bitwidth_t = typename variable_t::bitwidth_t;
 
-public:
+private:
   using cst_table_t = std::vector<linear_constraint_t>;
   using uint_set_t = std::set<unsigned int>;
   using trigger_table_t = std::map<variable_t, uint_set_t>;
   using variable_set_t = std::set<variable_t>;
-
-  
 
   std::size_t m_max_cycles;
   std::size_t m_max_op;
@@ -170,8 +167,8 @@ public:
     return residual;
   }
 
-public:
   // return true if bottom found while propagation
+  // donot use lower_half_line nor upper_half_line
   bool propagate(const linear_constraint_t &cst, IntervalCollection &env) {
     crab::ScopedCrabStats __st__("Linear Interval Solver.Solving propagation");
     namespace interval_traits = linear_interval_solver_impl;
@@ -195,15 +192,16 @@ public:
           return true;
         }
       } else if (cst.is_inequality()) {
+        Interval old_pivot = env.at(pivot);
         if (c > 0) {
           if (refine(pivot,
-                     interval_traits::lower_half_line(rhs, true /*cst is always signed*/),
+                     interval_traits::lower_half_line(old_pivot, rhs, true /*cst is always signed*/),
                      env)) {
             return true;
           }
         } else {
           if (refine(pivot,
-                     interval_traits::upper_half_line(rhs, true /*cst is always signed*/),
+                     interval_traits::upper_half_line(old_pivot, rhs, true /*cst is always signed*/),
                      env)) {
             return true;
           }
@@ -226,8 +224,6 @@ public:
     }
     return false;
   }
-
-public:
 
   bool solve_large_system(IntervalCollection &env) {
     m_op_count = 0;
@@ -267,7 +263,7 @@ public:
   }
 
 public:
-  linear_interval_solver(const linear_constraint_system_t &csts,
+  linear_tnum_solver(const linear_constraint_system_t &csts,
                          std::size_t max_cycles)
       : m_max_cycles(max_cycles), m_is_contradiction(false),
         m_is_large_system(false), m_op_count(0) {
@@ -334,6 +330,6 @@ public:
     }
   }
 
-}; // class linear_interval_solver
+}; // class linear_tnum_solver
 
 } // namespace ikos

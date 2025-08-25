@@ -279,7 +279,7 @@ endif ()
 
 #------ Crab Options for logging and stats ----------#
 # Enable always logging
-set(NCRABLOG FALSE)
+set(NCRABLOG TRUE)
 # Enable or disable stats gathering
 if (CRAB_ENABLE_STATS)
   set(CRAB_STATS TRUE)

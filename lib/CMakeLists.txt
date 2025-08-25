@@ -18,6 +18,9 @@ add_library(Crab ${CRAB_LIBS_TYPE}
   term_operators.cpp
   types.cpp
   wrapped_interval.cpp
+  tnum.cpp
+  stnum.cpp
+  swrapped_interval.cpp
   ##numbers 
   bignums.cpp
   safeint.cpp

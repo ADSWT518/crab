@@ -116,7 +116,12 @@ int main(int argc, char **argv) {
 
     {
       // sound result
-      z_wrapped_interval_domain_t init;
+      z_tnum_domain_t init;
+      run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    }
+    {
+      // sound result
+      z_stnum_domain_t init;
       run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
     }
     delete cfg;
@@ -125,8 +130,15 @@ int main(int argc, char **argv) {
     variable_factory_t vfac;
     z_cfg_t *cfg = prog2(vfac); 
     crab::outs() << *cfg << "\n";
-    z_wrapped_interval_domain_t init;
-    run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    {
+      z_tnum_domain_t init;
+      run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    }
+    {
+      z_stnum_domain_t init;
+      run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    }
+    
     delete cfg;
   }
   return 0;

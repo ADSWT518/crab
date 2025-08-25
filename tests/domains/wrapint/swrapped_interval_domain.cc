@@ -113,21 +113,32 @@ int main(int argc, char **argv) {
       z_interval_domain_t init;
       run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
     }
-
     {
       // sound result
       z_wrapped_interval_domain_t init;
       run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
     }
+    {
+      // sound result
+      z_swrapped_interval_domain_t init;
+      crab::outs() << "for z_swrapped_interval_domain_t"<< "\n";
+      run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    }
     delete cfg;
   }
-  {
+  /*{
     variable_factory_t vfac;
     z_cfg_t *cfg = prog2(vfac); 
     crab::outs() << *cfg << "\n";
-    z_wrapped_interval_domain_t init;
-    run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    {
+      z_wrapped_interval_domain_t init;
+      run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    }
+    {
+      z_swrapped_interval_domain_t init;
+      run(cfg, cfg->entry(), init, false, 1, 2, 20, stats_enabled);
+    }
     delete cfg;
-  }
+  }*/
   return 0;
 }

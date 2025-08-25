@@ -180,10 +180,11 @@ public:
   operator||(const wrapped_interval_domain_t &e) const override {
     crab::CrabStats::count(domain_name() + ".count.widening");
     crab::ScopedCrabStats __st__(domain_name() + ".widening");
-    CRAB_LOG("wrapped-int",
-             crab::outs() << "WIDENING " << *this << " and " << e << " = ");
+    //CRAB_LOG("wrapped-int",
+             crab::outs() << "WIDENING " << *this << " and " << e << " = ";//);
     wrapped_interval_domain_t res(this->_env || e._env);
-    CRAB_LOG("wrapped-int", crab::outs() << res << "\n";);
+    //CRAB_LOG("wrapped-int", 
+    crab::outs() << res << "\n";//);
     return res;
   }
 
@@ -2044,6 +2045,8 @@ public:
   }
 
   void assume_bool(const variable_t &x, bool is_negated) override {
+    CRAB_WARN(
+          "assume_bool use product implementation");
     _product.assume_bool(x, is_negated);
   }
 

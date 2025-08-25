@@ -9,6 +9,13 @@ int main(int argc, char *argv[]) {
 
   using namespace crab;
 
+  wrapint n1(0, 8);
+  wrapint n2(1, 8); 
+  wrapint n3(3, 8); 
+  crab::outs() << "fls of " << n1 << " is " << n1.fls() << "\n";
+  crab::outs() << "fls of " << n2 << " is " << n2.fls() << "\n";
+  crab::outs() << "fls of " << n3 << " is " << n3.fls() << "\n";
+/*
   {
     wrapint n1(5, 3);
     wrapint n2(7, 3);
@@ -290,6 +297,6 @@ int main(int argc, char *argv[]) {
     crab::outs() << "SMIN(63)=" << v16 << "\n";
     std::cout << std::bitset<63>(v16.get_uint64_t()) << "\n";
   }
-
+*/
   return 0;
 }
